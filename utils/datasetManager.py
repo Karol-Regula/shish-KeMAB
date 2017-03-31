@@ -104,10 +104,20 @@ def monthFind(month):
     closeDB()
     print tweets
 
+
+def levelSort():
+    initializeDB()
+    c.execute('SELECT level FROM crimes WHERE (level = ?);', ("FELONY",))
+    num = c.fetchall()
+    closeDB()
+    print num.count()
+    
+
 #crimes = csv.DictReader(open("data/crimes.csv"))#want: date, desc, category, boro
 #parseTweets()
 #monthSort()
 #monthFind(12)
 #yearSort()
-parseCrimes()
+#parseCrimes()
 #yearFind(2011)
+#levelSort()
