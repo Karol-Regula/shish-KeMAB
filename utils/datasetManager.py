@@ -36,10 +36,11 @@ def parseCrimes():
         d2 = row['OFNS_DESC'].decode("utf8")
         d3 = row['LAW_CAT_CD'].decode("utf8")
         d4 = row['BORO_NM'].decode("utf8")
-        c.execute('INSERT INTO crimes (value, type, level, borough) VALUES (?, ?, ?, ?);', (d1, d2, d3, d4))
-        i += 1
-        if (i % 1000 == 0):
-            print i
+        if len(d1) > 8 and (d1[8] == str(1) or (d1[9] == str(9) and d1[8] == str(0))):
+            c.execute('INSERT INTO crimes (value, type, level, borough) VALUES (?, ?, ?, ?);', (d1, d2, d3, d4))
+            i += 1
+            if (i % 1000 == 0):
+                print i
     closeDB()
     return
 
@@ -108,4 +109,5 @@ def monthFind(month):
 #monthSort()
 #monthFind(12)
 #yearSort()
-yearFind(2011)
+parseCrimes()
+#yearFind(2011)
