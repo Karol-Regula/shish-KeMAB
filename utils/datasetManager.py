@@ -2,23 +2,31 @@
 
 import csv
 import sqlite3
-
+import initialize
 
 f = "database.db"
 
-db = sqlite3.connect(f) #open if f exists, otherwise create
-c = db.cursor()    #facilitate db ops
+def initializeDB():
+    global c, db
+    file = '../data/database.db'
+    db = sqlite3.connect(file)
+    c = db.cursor()
+    initialize.createDB()
+    return c
 
-tweets = csv.DictReader(open("../data/tweets.csv"))#want: text, date
+def closeDB():
+    global db
+    db.commit()
+    db.close()
+
+def parseTweets():
+    initializeDB()
+    tweets = csv.DictReader(open("../data/tweets.csv"))#want: text, date
+    for row in tweets:
+        c.execute('INSERT INTO tweets (content, value) VALUES (?, ?);', ((row['Text']).decode("utf8"), row['Date'].decode("utf8")))
+        #print row['Date']
+    closeDB()
+    return
+
 #crimes = csv.DictReader(open("data/crimes.csv"))#want: date, desc, category, boro
-
-#goodTweets = []
-for row in tweets:
-    #sql add row['Text'] to tweet table
-    q = 'INSERT INTO tweets VALUES ("%s","%s")' % (row['Text'],row['Date'])
-
-for row in 
-#goodTweets['Text'] = tweets['Text']
-#goodTweets[1] = tweets[1]
-
-#print goodTweets
+parseTweets()
