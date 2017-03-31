@@ -44,80 +44,8 @@ def parseCrimes():
     closeDB()
     return
 
-def yearSort():
-    initializeDB()
-    q = 'SELECT value FROM tweets'
-    date = c.execute(q)
-    dates = date.fetchall()
-    yearQuan = [[2009,0],[2010,0],[2011,0],[2012,0],[2013,0],[2014,0],[2015,0],[2016,0]]#there's an easier way, but idk...etc.
-    for item in dates:
-        yearS = item[0][:4]
-        yearI = int(yearS)
-        for i in range(len(yearQuan)):
-            if yearQuan[i][0] == yearI:
-                yearQuan[i][1] = yearQuan[i][1]+1
-    closeDB()
-    print yearQuan
 
-def yearFind(year):
-    initializeDB()
-    tweets = []
-    q = 'SELECT * FROM tweets'
-    content = c.execute(q)
-    allThings = content.fetchall()
-
-    for item in allThings:
-        yearS = item[1][:4]
-        yearI = int(yearS)
-        if (yearI == year):
-            tweets.append(item[0])
-
-    closeDB()
-    print tweets
-
-def monthSort():
-    initializeDB()
-    q = 'SELECT value FROM tweets'
-    date = c.execute(q)
-    dates = date.fetchall()
-    monthQuan = [0,0,0,0,0,0,0,0,0,0,0,0,0]#there's an easier way, but idk -- jan is 1, feb is 2, etc. 0 is null
-    for item in dates:
-        monthS = item[0][5:7]
-        monthI = int(monthS)
-        monthQuan[monthI-1] = monthQuan[monthI-1]+1
-    closeDB()
-    print monthQuan
-
-def monthFind(month):
-    initializeDB()
-    tweets = []
-    q = 'SELECT * FROM tweets'
-    content = c.execute(q)
-    allThings = content.fetchall()
-
-    for item in allThings:
-        monthS = item[1][5:7]
-        monthI = int(monthS)
-        if (monthI == month):
-            tweets.append(item[0])
-
-    closeDB()
-    print tweets
-
-
-def levelSort():
-    initializeDB()
-    c.execute('SELECT level FROM crimes WHERE (level = ?);', ("FELONY",))
-    num = c.fetchall()
-    closeDB()
-    print num.count()
-    
-
-#crimes = csv.DictReader(open("data/crimes.csv"))#want: date, desc, category, boro
-#parseTweets()
-#monthSort()
-#monthFind(12)
-#yearSort()
+parseTweets()
 #parseCrimes()
-#yearFind(2011)
-#levelSort()
+
+
