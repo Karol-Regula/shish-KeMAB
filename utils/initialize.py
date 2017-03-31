@@ -10,7 +10,7 @@ def createDB():
   c = db.cursor()    #facilitate db ops
 
   #------------------------create tables---------------------------------------
-  q = "CREATE TABLE IF NOT EXISTS crimes (type TEXT, frequency INTEGER, time INTEGER)"
+  q = "CREATE TABLE IF NOT EXISTS crimes (value TEXT, type TEXT, level TEXT, borough TEXT)"
   c.execute(q)
 
   q = 'CREATE TABLE IF NOT EXISTS tweets (content TEXT, value TEXT)'

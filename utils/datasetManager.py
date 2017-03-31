@@ -28,5 +28,22 @@ def parseTweets():
     closeDB()
     return
 
+def parseCrimes():
+    initializeDB()
+    i = 0
+    crimes = csv.DictReader(open("../data/crimes.csv"))
+    for row in crimes:
+        d1 = row['CMPLNT_FR_DT'].decode("utf8")
+        d2 = row['OFNS_DESC'].decode("utf8")
+        d3 = row['LAW_CAT_CD'].decode("utf8")
+        d4 = row['BORO_NM'].decode("utf8")
+        c.execute('INSERT INTO crimes (value, type, level, borough) VALUES (?, ?, ?, ?);', (d1, d2, d3, d4))
+        i += 1
+        if (i % 1000 == 0):
+            print i
+    closeDB()
+    return
+
 #crimes = csv.DictReader(open("data/crimes.csv"))#want: date, desc, category, boro
 parseTweets()
+#parseCrimes()
