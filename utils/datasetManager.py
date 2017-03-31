@@ -22,8 +22,12 @@ def closeDB():
 def parseTweets():
     initializeDB()
     tweets = csv.DictReader(open("../data/tweets.csv"))#want: text, date
+    i = 0
     for row in tweets:
         c.execute('INSERT INTO tweets (content, value) VALUES (?, ?);', ((row['Text']).decode("utf8"), row['Date'].decode("utf8")))
+        i += 1
+        if (i % 1000 == 0):
+            print i
     closeDB()
     return
 
@@ -103,15 +107,6 @@ def monthFind(month):
 
     closeDB()
     print tweets
-
-
-def levelSort():
-    initializeDB()
-    c.execute('SELECT level FROM crimes WHERE (level = ?);', ("FELONY",))
-    num = c.fetchall()
-    closeDB()
-    print num.count()
-    
 
 #crimes = csv.DictReader(open("data/crimes.csv"))#want: date, desc, category, boro
 #parseTweets()
