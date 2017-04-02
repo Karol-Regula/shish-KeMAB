@@ -32,7 +32,7 @@ def levelSort():
     closeDB()
     print out
 
-def findCrimesIn(month, year):
+def findCrimesInDate(month, year):#returns amount of crimes in a specific month and year
     initializeDB()
     out = 0
     c.execute('SELECT value FROM crimes;')
@@ -46,6 +46,27 @@ def findCrimesIn(month, year):
     print 'month: ' + month + ', year: ' + year
     print 'amount: ' + str(out)
     return out
+
+def findCrimesInDateAll():#runs the findCrimesIn function for each month and year, returns array
+    out = []
+    months = ['01','02','03','04','05','06','07','08','09','10','11','12']
+    years = ['09','10','11','12','13','14','15','16']
+    for y in years:
+        for m in months:
+            out.append(findCrimesInDate(m, y))
+    initializeDB()
+    c.execute('INSERT INTO parsed (content, array) VALUES ("findCrimesInDateAll", ?);', (str(out),))
+    closeDB()
+    print out
+    return out
+
+def getCrimesInDateAll():#retreives ready data from parsed table
+    initializeDB()
+    c.execute('SELECT array FROM parsed WHERE (content = "findCrimesInDateAll");')
+    out = c.fetchall()
+    closeDB()
+    print out[0][0]
+    return out[0][0]
 
 def yearSort():
     initializeDB()
@@ -156,6 +177,8 @@ def datesContent(month, year):
 #yearSort()
 #yearFind(2011)
 #levelSort()
-findCrimesIn('03', '14')#(March, 2014)
-findCrimesIn('05', '11')
+#findCrimesInDate('03', '14')#(March, 2014)
+#findCrimesInDate('05', '11')
+#findCrimesInDateAll()
+getCrimesInDateAll()
 #datesContent(2,2011)

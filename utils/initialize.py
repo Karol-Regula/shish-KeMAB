@@ -16,5 +16,8 @@ def createDB():
   q = 'CREATE TABLE IF NOT EXISTS tweets (content TEXT, value TEXT)'
   c.execute(q)
 
+  q = 'CREATE TABLE IF NOT EXISTS parsed (content TEXT, array TEXT)'
+  c.execute(q)
+
   db.commit()
   db.close()
