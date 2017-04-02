@@ -47,3 +47,6 @@ def parseCrimes():
                 print i
     closeDB()
     return
+
+#parseCrimes()
+#parseTweets()

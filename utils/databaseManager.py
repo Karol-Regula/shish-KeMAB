@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 import csv
 import sqlite3
 import initialize
@@ -32,6 +31,21 @@ def levelSort():
     out[2] = num[0][0]
     closeDB()
     print out
+
+def findCrimesIn(month, year):
+    initializeDB()
+    out = 0
+    c.execute('SELECT value FROM crimes;')
+    dates = c.fetchall();
+    for date in dates:
+        date = date[0]
+        if date[8:] == year:
+            if date[0:2] == month:
+                out += 1
+    closeDB()
+    print 'month: ' + month + ', year: ' + year
+    print 'amount: ' + str(out)
+    return out
 
 def yearSort():
     initializeDB()
@@ -97,14 +111,6 @@ def monthFind(month):
     print tweets
     return tweets
 
-
-def levelSort():
-    initializeDB()
-    c.execute('SELECT level FROM crimes WHERE (level = ?);', ("FELONY",))
-    num = c.fetchall()
-    closeDB()
-    print num.count()
-
 def datesQuan():
     initializeDB()
     q = 'SELECT value FROM tweets'
@@ -122,7 +128,7 @@ def datesQuan():
     closeDB()
     print datesQuan
     return datesQuan
-    
+
 
 def datesContent(month, year):
     initializeDB()
@@ -143,11 +149,13 @@ def datesContent(month, year):
     print tweets[0]
     return tweets
 
-    
+
 
 #monthSort()
 #monthFind(12)
 #yearSort()
 #yearFind(2011)
 #levelSort()
+findCrimesIn('03', '14')#(March, 2014)
+findCrimesIn('05', '11')
 #datesContent(2,2011)
