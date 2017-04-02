@@ -8,7 +8,7 @@ f = "database.db"
 
 def initializeDB():
     global c, db
-    file = '../data/database.db'
+    file = '/data/database.db'
     db = sqlite3.connect(file)
     c = db.cursor()
     initialize.createDB()
@@ -21,7 +21,7 @@ def closeDB():
 
 def parseTweets():
     initializeDB()
-    tweets = csv.DictReader(open("../data/tweets.csv"))#want: text, date
+    tweets = csv.DictReader(open("/data/tweets.csv"))#want: text, date
     i = 0
     for row in tweets:
         c.execute('INSERT INTO tweets (content, value) VALUES (?, ?);', ((row['Text']).decode("utf8"), row['Date'].decode("utf8")))
@@ -34,7 +34,7 @@ def parseTweets():
 def parseCrimes():
     initializeDB()
     i = 0
-    crimes = csv.DictReader(open("../data/crimes.csv"))
+    crimes = csv.DictReader(open("/data/crimes.csv"))
     for row in crimes:
         d1 = row['CMPLNT_FR_DT'].decode("utf8")
         d2 = row['OFNS_DESC'].decode("utf8")
