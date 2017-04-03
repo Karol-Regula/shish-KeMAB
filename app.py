@@ -12,7 +12,7 @@ def placeholder0():
 
 @app.route("/data")
 def data():
-    out = databaseManager.sentQuan()
+    out = databaseManager.getCrimesInDateAll()
     print out
     return render_template('test.html', test=out)
 
