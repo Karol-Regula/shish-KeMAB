@@ -12,7 +12,7 @@ def placeholder0():
 
 @app.route("/data")
 def data():
-    out = databaseManager.getCrimesInDateAll()
+    out = datasetManager.parseTweets()
     print out
     return render_template('test.html', test=out)
 

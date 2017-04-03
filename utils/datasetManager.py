@@ -11,7 +11,7 @@ f = "database.db"
 
 def initializeDB():
     global c, db
-    file = '/data/database.db'
+    file = 'data/database.db'
     db = sqlite3.connect(file)
     c = db.cursor()
     initialize.createDB()
@@ -26,11 +26,11 @@ def closeDB():
 
 def parseTweets():
     initializeDB()
-    tweets = csv.DictReader(open("/data/tweets.csv"))  # want: text, date
+    tweets = csv.DictReader(open("data/tweets.csv"))  # want: text, date
     i = 0
     for row in tweets:
         text = row['Text'].decode("utf8")
-        c.execute('INSERT INTO tweets (content, value) VALUES (?, ?, ?);',
+        c.execute('INSERT INTO tweets (content, value, sentiment) VALUES (?, ?, ?);',
                   (text, row['Date'].decode("utf8"),
                    get_tweet_sentiment(text)))
         i += 1
@@ -46,25 +46,25 @@ def get_tweet_sentiment(text):
     indLink = tweet.find("http")
     if indLink != -1:
         if indLink == 0:
-            return "none"
+            return -2
         else:
             tweet = tweet[0:indLink]  # Cut up to index of link
     indLink = tweet.find("pic.twitter.com")
     if indLink != -1:
         if indLink == 0:
-            return "none"
+            return -2
         else:
             tweet = tweet[0:indLink]  # Cut up to index of link
     # print tweet.encode("utf-8")
     # Analyze using TextBlob
     analysis = TextBlob(sanitize_tweet(tweet))
-    # print analysis.sentiment.polarity
+    print analysis.sentiment.polarity
     if analysis.sentiment.polarity > 0:
-        return "pos"
+        return 1
     elif analysis.sentiment.polarity == 0:
-        return "neut"
+        return 0
     else:
-        return "neg"
+        return -1
 
 
 def sanitize_tweet(tweet):
