@@ -1,3 +1,49 @@
 ENTRY FORMAT:
 firstL -- TIMESTAMP
 <CHANGES>
+
+karolR -- 2017-03-26 10:50 PM
+- added initial design diagrams
+
+karolR -- 2017-03-27 09:54 PM
+- uploaded readme
+
+karolR -- 2017-03-29 12:16 PM
+- added design document, renamed site layout file
+
+bayleS -- 2017-03-29 12:21 PM
+- added database initialization and table creation functions
+- added app.py and database managing python files, changed folder structure
+
+karolR -- 2017-03-29 12:21 PM
+- added devlog file and .gitignore
+- added tweets source file
+- created folder structure
+
+karolR -- 2017-03-30 12:31 PM
+- added list display template
+
+bayleS -- 2017-03-30 12:34 PM
+- started work on parsing function that add tweets to the sql database
+
+karolR -- 2017-03-30 08:47 PM
+- wrote some basic tweet parsing and database operation functions
+
+karolR -- 2017-03-31 07:19 AM
+- added initial crime parsing code, requires crimes.csv source to run
+
+bayleS -- 2017-03-31 12:02 PM
+- added functions that return amount of tweets per month and year
+- added functions that return tweets from requested month or year
+- moved some functions out of datasetmanager file
+- added more tweet-date parsing functions, can obtain list of tweets by month for d3
+
+karolR -- 2017-03-31 12:31 PM
+- changed crime parsing selection criteria, reduced size by 100MB
+- worked on crime data parsing functions
+
+karolR -- 2017-04-02 02:45 PM
+- added find crime by month and year function
+- added new 'parsed' table for storing results of parsing crime data
+- started work on app.py, added route that displays some parsed crime data
+
