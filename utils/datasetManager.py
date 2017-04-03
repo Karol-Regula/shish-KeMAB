@@ -1,5 +1,7 @@
 # here goes dataset conversions
 
+import re
+from textblob import TextBlob
 import csv
 import sqlite3
 import initialize
@@ -27,13 +29,57 @@ def parseTweets():
     tweets = csv.DictReader(open("/data/tweets.csv"))  # want: text, date
     i = 0
     for row in tweets:
-        c.execute('INSERT INTO tweets (content, value) VALUES (?, ?);',
-                  ((row['Text']).decode("utf8"), row['Date'].decode("utf8")))
+        text = row['Text'].decode("utf8")
+        c.execute('INSERT INTO tweets (content, value) VALUES (?, ?, ?);',
+                  (text, row['Date'].decode("utf8"),
+                   get_tweet_sentiment(text)))
         i += 1
         if (i % 1000 == 0):
             print i
     closeDB()
     return
+
+
+def get_tweet_sentiment(text):
+    # Could be refactored to be simpler, but screw it
+    tweet = text
+    indLink = tweet.find("http")
+    if indLink != -1:
+        if indLink == 0:
+            return "none"
+        else:
+            tweet = tweet[0:indLink]  # Cut up to index of link
+    indLink = tweet.find("pic.twitter.com")
+    if indLink != -1:
+        if indLink == 0:
+            return "none"
+        else:
+            tweet = tweet[0:indLink]  # Cut up to index of link
+    # print tweet.encode("utf-8")
+    # Analyze using TextBlob
+    analysis = TextBlob(sanitize_tweet(tweet))
+    # print analysis.sentiment.polarity
+    if analysis.sentiment.polarity > 0:
+        return "pos"
+    elif analysis.sentiment.polarity == 0:
+        return "neut"
+    else:
+        return "neg"
+
+
+def sanitize_tweet(tweet):
+    '''
+    Utility function to clean tweet text by removing links, special characters
+    using simple regex statements.
+    Function credits to
+    http://www.geeksforgeeks.org/twitter-sentiment-analysis-using-python/
+    '''
+    return ' '.join(re.sub("(@[A-Za-z0-9]+)|([^0-9A-Za-z \t])|(\w+:\/\/\S+)", " ", tweet).split())
+
+
+if __name__ == "__main__":
+    # Use for testing
+    parseTweets()
 
 
 def parseCrimes():

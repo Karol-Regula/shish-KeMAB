@@ -15,7 +15,7 @@ def createDB():
     q = "CREATE TABLE IF NOT EXISTS crimes (value TEXT, type TEXT, level TEXT, borough TEXT)"
     c.execute(q)
 
-    q = 'CREATE TABLE IF NOT EXISTS tweets (content TEXT, value TEXT)'
+    q = 'CREATE TABLE IF NOT EXISTS tweets (content TEXT, value TEXT, sentiment TEXT)'
     c.execute(q)
 
     q = 'CREATE TABLE IF NOT EXISTS parsed (content TEXT, array TEXT)'
