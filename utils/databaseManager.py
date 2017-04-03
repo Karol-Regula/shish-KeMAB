@@ -84,7 +84,7 @@ def yearSort():
     date = c.execute(q)
     dates = date.fetchall()
     yearQuan = [[2009, 0], [2010, 0], [2011, 0], [2012, 0], [2013, 0], [
-        2014, 0], [2015, 0], [2016, 0]]  # there's an easier way, but idk...etc.
+        2014, 0], [2015, 0], [2016, 0]]  # there's an easier way, but idk...
     for item in dates:
         yearS = item[0][:4]
         yearI = int(yearS)
@@ -146,13 +146,13 @@ def monthFind(month):
     print tweets
     return tweets
 
-
+# array of quantity of tweets from each month: [jan 2009, feb 2009, ..., dec 2016]
 def datesQuan():
     initializeDB()
     q = 'SELECT value FROM tweets'
     date = c.execute(q)
     dates = date.fetchall()
-    datesQuan = [0] * 12 * 8  # thanks misha!
+    datesQuan = [0] * 12 * 8  # thanks Misha!
     for item in dates:
         monthS = item[0][5:7]
         monthI = int(monthS)
@@ -164,6 +164,26 @@ def datesQuan():
     closeDB()
     print datesQuan
     return datesQuan
+
+def sentQuan():
+    initializeDB()
+    q = 'SELECT * FROM tweets'
+    tweet = c.execute(q)
+    tweets = tweet.fetchall()
+    sentQuan = [0] * 12 * 8  # thanks Misha!
+    for item in tweets:
+        monthS = item[1][5:7]
+        monthI = int(monthS)
+        yearS = item[1][:4]
+        yearI = int(yearS)
+        start = yearI - 2009
+        end = start * 12 + monthI - 1
+        print item[2]
+        if (item[2] != -2):
+            sentQuan[end] += item[2]
+    closeDB()
+    #print sentQuan
+    return sentQuan
 
 
 def datesContent(month, year):
