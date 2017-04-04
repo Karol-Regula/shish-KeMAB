@@ -205,6 +205,27 @@ def datesContent(month, year):
     print tweets[0]
     return tweets
 
+#returns array of list of string content of tweets 2 per month and the date it was posted
+def totalContent():
+    initializeDB()
+    q = 'SELECT * FROM tweets'
+    tweet = c.execute(q)
+    tweets = tweet.fetchall()
+    totQuan = [[]] * 12 * 8  # thanks Misha!
+    for item in tweets:
+        monthS = item[1][5:7]
+        monthI = int(monthS)
+        yearS = item[1][:4]
+        yearI = int(yearS)
+        start = yearI - 2009
+        end = start * 12 + monthI - 1
+        if (item[2] != -2 and item[2] != 0):
+            if (len(totQuan[end])<2):
+                totQuan[end].append(item[:2])
+    closeDB()
+    print totQuan
+    return totQuan
+
 
 # monthSort()
 # monthFind(12)
@@ -216,4 +237,5 @@ def datesContent(month, year):
 # findCrimesInDateAll()
 #getCrimesInDateAll()
 # datesContent(2,2011)
-sentQuan()
+#sentQuan()
+totalContent()
