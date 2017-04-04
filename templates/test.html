@@ -19,6 +19,8 @@
 </head>
 <body>
  <!-- For testing lists. -->
+{{test}}
+<hr>
 {{tweets}}
 <hr>
 {{sent}}
@@ -30,9 +32,16 @@
 var cnum = {{test}};
 var tw = {{tweets}};
 var st = {{sent}};
-var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-var sent = st.slice(40,52);
-var tweets = tw.slice(40,52);
+var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan1","Feb1","Mar1","Apr1","May1","Jun1","Jul1","Aug1","Sep1","Oct1","Nov1","Dec1","Jan2","Feb2","Mar2","Apr2","May2","Jun2","Jul2","Aug2","Sep2","Oct2","Nov2","Dec2","Jan3","Feb3","Mar3","Apr3","May3","Jun3","Jul3","Aug3","Sep3","Oct3","Nov3","Dec3","Jan4","Feb4","Mar4","Apr4","May4","Jun4","Jul4","Aug4","Sep4","Oct4","Nov4","Dec4","Jan5","Feb5","Mar5","Apr5","May5","Jun5","Jul5","Aug5","Sep5","Oct5","Nov5","Dec5","Jan6","Feb6","Mar6","Apr6","May6","Jun6","Jul6","Aug6","Sep6","Oct6","Nov6","Dec6"];
+var crimes = cnum.slice(0,84);
+var sent = st.slice(0,84);
+var tweets = tw.slice(0,84);
+sent[66] = 364;
+crimes[54] -= 1;
+
+console.log(sent);
+console.log(tweets);
+
 
 //filters
 function display(){	
@@ -44,7 +53,6 @@ function display(){
 		.transition()
 		.duration(2000)	
 	  	.attr("height", function(d) {return y2(d);})
-	  	.attr("width", x.rangeBand());
 	
 		svg.selectAll("g.y2").select("text.soon").text("Number of Tweets");	
 	}
@@ -56,7 +64,6 @@ function display(){
 		.transition()
 		.duration(2000)	
 	  	.attr("height", function(d) {return y2(d);})								
-	  	.attr("width", x.rangeBand());
 
 		svg.selectAll("g.y2").select("text.soon").text("Sentiment Value");	
 	}
@@ -66,11 +73,13 @@ function display(){
 d3.select("#check").on("change",display);
 
 
-var margin = {top: 20, right: 20, bottom: 70, left: 50},
-    width = 1200 - margin.left - margin.right,
-    height = 800 - margin.top - margin.bottom;
+var margin = {top: 20, right: 20, bottom: 70, left: 250},
+    width = 1600 - margin.left - margin.right,
+    height = 900 - margin.top - margin.bottom;
 
-var x = d3.scale.ordinal().rangeRoundBands([0, width], .4);
+//var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+
+var x = d3.scale.ordinal().rangeRoundBands([0,width],.05);
 
 var y = d3.scale.linear().range([height / 2, 0]);
 
@@ -79,6 +88,7 @@ var y2 = d3.scale.linear().range([0,height / 2]);
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
+	//.ticks(84);
     //.tickFormat(d3.time.format("%Y-%m"));
 
 var yAxis1 = d3.svg.axis()
@@ -94,13 +104,14 @@ var yAxis2 = d3.svg.axis()
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
     .attr("height", height + margin.top + margin.bottom)
-  .append("g")
+    .append("g")
+	.attr("align","center")
     .attr("transform", 
           "translate(" + margin.left + "," + margin.top + ")");
 
 //setting the axis values
 x.domain(months);
-y.domain([25000,d3.max(cnum)]);
+y.domain([0,d3.sum(tweets)/d3.sum(crimes) * d3.max(crimes)]);
 y2.domain([0,d3.max(tw)]);
 
 
@@ -122,7 +133,7 @@ y2.domain([0,d3.max(tw)]);
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("# of Crimes");
+      .text("# of Crimes (Scaled Down)");
  
   svg.append("g")
       .attr("class", "y2 axis")
@@ -132,30 +143,31 @@ y2.domain([0,d3.max(tw)]);
       .attr("class","soon")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
+	  .attr("x", -275)
       .attr("dx", "-.71em")
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Sentiment Value");
+      .text("Total Sentiment");
 	
   svg.selectAll("bar")
-	  	.data(sent)
-	  	.enter()
-	  	.append("rect")
-	  	.attr("x",function(d) {return x(months[sent.indexOf(d)])})
-	  	.attr("y", function(d) {return height/2 + 1;})
-	  	.attr("height", function(d) {return y2(d);})
-		.transition(2000)									
-	  	.attr("width", x.rangeBand())
-	  	.style("fill","red");
-		console.log(svg);
+	  .data(sent)
+	  .enter()
+	  .append("rect")
+	  .attr("x", function(d){return x(months[sent.indexOf(d)])})
+	  //.attr("x",function(d) {return x(sent.indexOf(d) + 1) - 3})
+	  .attr("y", function(d) {return height/2 + 1;})
+	  .attr("height", function(d) {return y2(d);})								
+	  .attr("width", x.rangeBand())
+	  .style("fill","red");
 	
   svg.selectAll(".bar")
-      	  .data(cnum.slice(0,12))
-          .enter()
+      .data(crimes)
+      .enter()
 	  .append("rect")
-	  .attr("x",function(d) {return x(months[cnum.indexOf(d)])})
-	  .attr("y",function(d) {return y(d);})
-          .attr("height", function(d) {return height / 2 - y(d);})
+	  .attr("x", function(d){return x(months[crimes.indexOf(d)])})
+	  //.attr("x",function(d) {return x(cnum.indexOf(d) + 1) - 3})
+	  .attr("y", function(d) {return y(d3.sum(tweets)/d3.sum(crimes) * d);})
+      .attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);})
 	  .attr("width", x.rangeBand())
 	  .style("fill","steelblue");
 
