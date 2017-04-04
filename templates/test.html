@@ -21,27 +21,37 @@
 {{test}} <!-- For testing lists. -->
 <script>
 //read in the data arrays
-var cnum = {{test}}
-var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"]
+var cnum = {{test}};
+var tw = {{tweets}};
+var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var tweets = tw.slice(40,52);
 
+console.log(tw);
 
 var margin = {top: 20, right: 20, bottom: 70, left: 50},
     width = 600 - margin.left - margin.right,
-    height = 400 - margin.top - margin.bottom;
+    height = 800 - margin.top - margin.bottom;
 
-var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+var x = d3.scale.ordinal().rangeRoundBands([0, width], .4);
 
-var y = d3.scale.linear().range([height, 0]);
+var y = d3.scale.linear().range([height / 2, 0]);
+
+var y2 = d3.scale.linear().range([0,height / 2]);
 
 var xAxis = d3.svg.axis()
     .scale(x)
     .orient("bottom")
     //.tickFormat(d3.time.format("%Y-%m"));
 
-var yAxis = d3.svg.axis()
+var yAxis1 = d3.svg.axis()
     .scale(y)
     .orient("left")
     .ticks(10);
+
+var yAxis2 = d3.svg.axis()
+	.scale(y2)
+	.orient("left")
+	.ticks(10);
 
 var svg = d3.select("body").append("svg")
     .attr("width", width + margin.left + margin.right)
@@ -52,11 +62,13 @@ var svg = d3.select("body").append("svg")
 
 //setting the axis values
 x.domain(months);
-y.domain([0,45000]);
+y.domain([25000,d3.max(cnum)]);
+y2.domain([0,d3.max(tw)]);
+
 
   svg.append("g")
       .attr("class", "x axis")
-      .attr("transform", "translate(0," + height + ")")
+      .attr("transform", "translate(0," + height / 2 + ")")
       .call(xAxis)
       .selectAll("text")
       .style("text-anchor", "end")
@@ -66,23 +78,46 @@ y.domain([0,45000]);
 
   svg.append("g")
       .attr("class", "y axis")
-      .call(yAxis)
+      .call(yAxis1)
       .append("text")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("Quantity");
-
+      .text("# of Crimes");
+ 
+  svg.append("g")
+      .attr("class", "y2 axis")
+	  .attr("transform", "translate(0," + height / 2 + ")" )
+      .call(yAxis2)
+      .append("text")
+      .attr("transform", "rotate(-90)")
+      .attr("y", 6)
+	  .attr("dx", "-.71em")
+      .attr("dy", ".71em")
+      .style("text-anchor", "end")
+      .text("# of Tweets");
+	  
+	  
    svg.selectAll(".bar")
       .data(cnum.slice(0,12))
       .enter()
 	  .append("rect")
 	  .attr("x",function(d) {return x(months[cnum.indexOf(d)])})
 	  .attr("y",function(d) {return y(d);})
-      .attr("height", function(d) {return height - y(d);})
+      .attr("height", function(d) {return height / 2 - y(d);})
 	  .attr("width", x.rangeBand())
 	  .style("fill","steelblue");
+
+   svg.selectAll(".bar")
+	  .data(tweets)
+	  .enter()
+	  .append("rect")
+	  .attr("x",function(d) {return x(months[tweets.indexOf(d)])})
+	  .attr("y", function(d) {return height/2 + 1;})
+	  .attr("height", function(d) {return y2(d);})
+	  .attr("width", x.rangeBand())
+	  .style("fill","red");
 
 </script>
 </body>

@@ -178,7 +178,7 @@ def sentQuan():
         yearI = int(yearS)
         start = yearI - 2009
         end = start * 12 + monthI - 1
-        print item[2]
+       # print item[2]
         if (item[2] != -2):
             sentQuan[end] += item[2]
     closeDB()

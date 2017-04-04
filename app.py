@@ -7,14 +7,16 @@ app = Flask(__name__)
 
 @app.route("/")
 def placeholder0():
+    print databaseManager.sentQuan()
     return
 
 
 @app.route("/data")
 def data():
     out = databaseManager.getCrimesInDateAll()
+    tweets = databaseManager.sentQuan()
     print out
-    return render_template('test.html', test=out)
+    return render_template('test.html', test=out, tweets = tweets )
 
 
 @app.route("/build")
