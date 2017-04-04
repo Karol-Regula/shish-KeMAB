@@ -18,18 +18,56 @@
 	</style>
 </head>
 <body>
-{{test}} <!-- For testing lists. -->
+ <!-- For testing lists. -->
+{{tweets}}
+<hr>
+{{sent}}
+<hr>
+<center>
+<input type="checkbox" id="check"> Show Number of Tweets</input>
 <script>
 //read in the data arrays
 var cnum = {{test}};
 var tw = {{tweets}};
+var st = {{sent}};
 var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+var sent = st.slice(40,52);
 var tweets = tw.slice(40,52);
 
-console.log(tw);
+//filters
+function display(){	
+	if(d3.select("#check").property("checked")){
+		svg.selectAll("rect")
+	  	.data(tweets)
+	  	//.attr("x",function(d) {return x(months[sent.indexOf(d)])})
+	  	.attr("y", function(d) {return height/2 + 1;})
+		.transition()
+		.duration(2000)	
+	  	.attr("height", function(d) {return y2(d);})
+	  	.attr("width", x.rangeBand());
+	
+		svg.selectAll("g.y2").select("text.soon").text("Number of Tweets");	
+	}
+	else{
+		svg.selectAll("rect")
+	  	.data(sent)
+	  	//.attr("x",function(d) {return x(months[tweets.indexOf(d)])})
+	  	.attr("y", function(d) {return height/2 + 1;})
+		.transition()
+		.duration(2000)	
+	  	.attr("height", function(d) {return y2(d);})								
+	  	.attr("width", x.rangeBand());
+
+		svg.selectAll("g.y2").select("text.soon").text("Sentiment Value");	
+	}
+}
+
+
+d3.select("#check").on("change",display);
+
 
 var margin = {top: 20, right: 20, bottom: 70, left: 50},
-    width = 600 - margin.left - margin.right,
+    width = 1200 - margin.left - margin.right,
     height = 800 - margin.top - margin.bottom;
 
 var x = d3.scale.ordinal().rangeRoundBands([0, width], .4);
@@ -88,36 +126,38 @@ y2.domain([0,d3.max(tw)]);
  
   svg.append("g")
       .attr("class", "y2 axis")
-	  .attr("transform", "translate(0," + height / 2 + ")" )
+      .attr("transform", "translate(0," + height / 2 + ")" )
       .call(yAxis2)
       .append("text")
+      .attr("class","soon")
       .attr("transform", "rotate(-90)")
       .attr("y", 6)
-	  .attr("dx", "-.71em")
+      .attr("dx", "-.71em")
       .attr("dy", ".71em")
       .style("text-anchor", "end")
-      .text("# of Tweets");
-	  
-	  
-   svg.selectAll(".bar")
-      .data(cnum.slice(0,12))
-      .enter()
+      .text("Sentiment Value");
+	
+  svg.selectAll("bar")
+	  	.data(sent)
+	  	.enter()
+	  	.append("rect")
+	  	.attr("x",function(d) {return x(months[sent.indexOf(d)])})
+	  	.attr("y", function(d) {return height/2 + 1;})
+	  	.attr("height", function(d) {return y2(d);})
+		.transition(2000)									
+	  	.attr("width", x.rangeBand())
+	  	.style("fill","red");
+		console.log(svg);
+	
+  svg.selectAll(".bar")
+      	  .data(cnum.slice(0,12))
+          .enter()
 	  .append("rect")
 	  .attr("x",function(d) {return x(months[cnum.indexOf(d)])})
 	  .attr("y",function(d) {return y(d);})
-      .attr("height", function(d) {return height / 2 - y(d);})
+          .attr("height", function(d) {return height / 2 - y(d);})
 	  .attr("width", x.rangeBand())
 	  .style("fill","steelblue");
-
-   svg.selectAll(".bar")
-	  .data(tweets)
-	  .enter()
-	  .append("rect")
-	  .attr("x",function(d) {return x(months[tweets.indexOf(d)])})
-	  .attr("y", function(d) {return height/2 + 1;})
-	  .attr("height", function(d) {return y2(d);})
-	  .attr("width", x.rangeBand())
-	  .style("fill","red");
 
 </script>
 </body>
