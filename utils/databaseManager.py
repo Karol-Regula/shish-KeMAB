@@ -180,9 +180,9 @@ def sentQuan():
         end = start * 12 + monthI - 1
        # print item[2]
         if (item[2] != -2):
-            sentQuan[end] += item[2]
+            sentQuan[end] += abs(item[2])
     closeDB()
-    #print sentQuan
+    print sentQuan
     return sentQuan
 
 
@@ -214,5 +214,6 @@ def datesContent(month, year):
 # findCrimesInDate('03', '14')#(March, 2014)
 # findCrimesInDate('05', '11')
 # findCrimesInDateAll()
-getCrimesInDateAll()
+#getCrimesInDateAll()
 # datesContent(2,2011)
+sentQuan()
