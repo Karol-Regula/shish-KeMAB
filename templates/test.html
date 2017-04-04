@@ -32,7 +32,7 @@
 var cnum = {{test}};
 var tw = {{tweets}};
 var st = {{sent}};
-var months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec","Jan1","Feb1","Mar1","Apr1","May1","Jun1","Jul1","Aug1","Sep1","Oct1","Nov1","Dec1","Jan2","Feb2","Mar2","Apr2","May2","Jun2","Jul2","Aug2","Sep2","Oct2","Nov2","Dec2","Jan3","Feb3","Mar3","Apr3","May3","Jun3","Jul3","Aug3","Sep3","Oct3","Nov3","Dec3","Jan4","Feb4","Mar4","Apr4","May4","Jun4","Jul4","Aug4","Sep4","Oct4","Nov4","Dec4","Jan5","Feb5","Mar5","Apr5","May5","Jun5","Jul5","Aug5","Sep5","Oct5","Nov5","Dec5","Jan6","Feb6","Mar6","Apr6","May6","Jun6","Jul6","Aug6","Sep6","Oct6","Nov6","Dec6"];
+var months = ["Jan '09","Feb '09","Mar '09","Apr '09","May '09","Jun '09","Jul '09","Aug '09","Sep '09","Oct '09","Nov '09","Dec '09","Jan '10","Feb '10","Mar '10","Apr '10","May '10","Jun '10","Jul '10","Aug '10","Sep '10","Oct '10","Nov '10","Dec '10","Jan '11","Feb '11","Mar '11","Apr '11","May '11","Jun '11","Jul '11","Aug '11","Sep '11","Oct '11","Nov '11","Dec '11","Jan '12","Feb '12","Mar '12","Apr '12","May '12","Jun '12","Jul '12","Aug '12","Sep '12","Oct '12","Nov '12","Dec '12","Jan '13","Feb '13","Mar '13","Apr '13","May '13","Jun '13","Jul '13","Aug '13","Sep '13","Oct '13","Nov '13","Dec '13","Jan '14","Feb '14","Mar '14","Apr '14","May '14","Jun '14","Jul '14","Aug '14","Sep '14","Oct '14","Nov '14","Dec '14","Jan '15","Feb '15","Mar '15","Apr '15","May '15","Jun '15","Jul '15","Aug '15","Sep '15","Oct '15","Nov '15","Dec '15"];
 var crimes = cnum.slice(0,84);
 var sent = st.slice(0,84);
 var tweets = tw.slice(0,84);
@@ -111,7 +111,7 @@ var svg = d3.select("body").append("svg")
 
 //setting the axis values
 x.domain(months);
-y.domain([0,d3.sum(tweets)/d3.sum(crimes) * d3.max(crimes)]);
+y.domain([0,d3.sum(tweets)/d3.sum(crimes) * d3.max(crimes) + 150]);
 y2.domain([0,d3.max(tw)]);
 
 
@@ -153,7 +153,7 @@ y2.domain([0,d3.max(tw)]);
 	  .data(sent)
 	  .enter()
 	  .append("rect")
-	  .attr("x", function(d){return x(months[sent.indexOf(d)])})
+	  .attr("x", function(d,i){return x(months[i])})
 	  //.attr("x",function(d) {return x(sent.indexOf(d) + 1) - 3})
 	  .attr("y", function(d) {return height/2 + 1;})
 	  .attr("height", function(d) {return y2(d);})								
@@ -164,7 +164,8 @@ y2.domain([0,d3.max(tw)]);
       .data(crimes)
       .enter()
 	  .append("rect")
-	  .attr("x", function(d){return x(months[crimes.indexOf(d)])})
+	  .attr("x", function(d,i){return x(months[i])})
+	  //.attr("x", function(d){return x(months[crimes.indexOf(d)])})
 	  //.attr("x",function(d) {return x(cnum.indexOf(d) + 1) - 3})
 	  .attr("y", function(d) {return y(d3.sum(tweets)/d3.sum(crimes) * d);})
       .attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);})
