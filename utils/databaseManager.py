@@ -294,25 +294,54 @@ def totalContent():
     initializeDB()
     q = 'SELECT * FROM tweets'
     tweet = c.execute(q)
+    out = []
     tweets = tweet.fetchall()
-    totQuan = [[]] * 12 * 8  # thanks Misha!
-    for item in tweets:
-        monthS = item[1][5:7]
-        monthI = int(monthS)
-        yearS = item[1][:4]
-        yearI = int(yearS)
-        start = yearI - 2009
-        end = start * 12 + monthI - 1
-        if (item[2] != -2 and item[2] != 0):
-            if (len(totQuan[end])<1):
-                out = []
-                out.append(str(item[0]))
-                out.append(str(item[1]))
-                totQuan[end].append(out)
-                print "out" + str(out)
+    months = ['01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12']
+    years = ['09', '10', '11', '12', '13', '14', '15']
+    for y in years:
+        for m in months:
+            #print y
+            #print m
+            temp = []
+            for t in tweets:
+                month = t[1][5:7]
+                year = t[1][2:4]
+                if y == year and m == month:
+                    if ((t[2] != -2 and t[2] != 0) and (temp == [])):
+                        temp.append(t[0].encode("utf-8"))
+                        temp.append(str(t[1]))
+                        #print "temp: " + str(temp)
+            out.append(temp)
+    out1 = "!!!!!".join(str(x) for x in out)
+    out1.replace('\"', '\'')
+    #print out1
     closeDB()
-    #print totQuan
-    return totQuan
+    return out1
+
+# def totalContent():
+#     initializeDB()
+#     q = 'SELECT * FROM tweets'
+#     tweet = c.execute(q)
+#     tweets = tweet.fetchall()
+#     totQuan = [[]] * 12 * 8  # thanks Misha!
+#     for item in tweets:
+#         month = item[1][5:7]
+#         month = int(month)
+#         year = item[1][:4]
+#         year = int(year)
+#         start = year - 2009
+#         end = start * 12 + month - 1
+#
+#         if (item[2] != -2 and item[2] != 0):
+#             if (len(totQuan[end])<1):
+#                 out = []
+#                 out.append(str(item[0]))
+#                 out.append(str(item[1]))
+#                 totQuan[end].append(out)
+#                 print "out" + str(out)
+#     closeDB()
+#     #print totQuan
+#     return totQuan
 
 
 # monthSort()
