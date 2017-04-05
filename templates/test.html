@@ -28,6 +28,44 @@
 			pointer-events: none;
 		 }
 
+     .checkboxFive {
+	     width: 25px;
+	     margin: 20px 100px;
+	     position: relative;
+     }
+    .checkboxFive label {
+	    cursor: pointer;
+	    position: absolute;
+	    width: 25px;
+	    height: 25px;
+	    top: 0;
+  	  left: 0;
+	    background: #eee;
+	    border:1px solid #ddd;
+    }
+.checkboxFive label:after {
+	opacity: 0.1;
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	background: transparent;
+	top: 6px;
+	left: 7px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+
+	transform: rotate(-45deg);
+}
+
+.checkboxFive label:hover::after {
+	opacity: 0.5;
+}
+.checkboxFive input[type=checkbox]:checked + label:after {
+	opacity: 1;
+}
+
 	</style>
 </head>
 <body>
@@ -40,6 +78,27 @@
 {{sent}}
 <hr>
 <center>
+  <table>
+    <tr>
+      <td align="center">Number of Tweets</td>
+      <td align="center">Larceny</td>
+      <td align="center">Harrassment</td>
+      <td align="center">Assault</td>
+      <td align="center">Drugs</td>
+      <td align="center">Intoxicated Driving</td>
+      <td align="center">Other Crimes</td>
+    </tr>
+    <tr>
+      <td><div class="checkboxFive"><input type="checkbox" value="1" id="check" name="" /><label for="check"></label></div></td>
+      <td><div class="checkboxFive"><input type="checkbox" value="1" id="larceny" name="" /><label for="larceny"></label></div></td>
+      <td><div class="checkboxFive"><input type="checkbox" value="1" id="harrassment" name="" /><label for="harrassment"></label></div></td>
+      <td><div class="checkboxFive"><input type="checkbox" value="1" id="assault" name="" /><label for="assault"></label></div></td>
+      <td><div class="checkboxFive"><input type="checkbox" value="1" id="drugs" name="" /><label for="drugs"></label></div></td>
+      <td><div class="checkboxFive"><input type="checkbox" value="1" id="intox" name="" /><label for="intox"></label></div></td>
+      <td><div class="checkboxFive"><input type="checkbox" value="1" id="other" name="" /><label for="other"></label></div></td>
+    </tr>
+  </table>
+<!--
 <input type="checkbox" id="check">Number of Tweets</input>
 <input type="checkbox" id="larceny">Larceny</input>
 <input type="checkbox" id="harrassment">Harrassment</input>
@@ -47,6 +106,7 @@
 <input type="checkbox" id="drugs">Drugs</input>
 <input type="checkbox" id="intox">Intox Driving</input>
 <input type="checkbox" id="other">Other</input>
+-->
 <script>
 //read in the data arrays
 var cnum = {{test}};
@@ -67,14 +127,14 @@ function lar(){
 	if(d3.select("#larceny").property("checked") ){
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]))})
 		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]));});
 	}
 	else if(!d3.select("#larceny").property("checked")){
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]))})
 		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]));});
 	}
@@ -84,14 +144,14 @@ function har(){
 	if(d3.select("#harrassment").property("checked")){
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]))})
 		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]));});
 	}
 	else{
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]))})
 		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]));});
 	}
@@ -101,14 +161,14 @@ function asu(){
 	if(d3.select("#assault").property("checked")){
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]))})
 		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]));});
 	}
 	else{
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]))})
 		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]));});
 	}
@@ -118,14 +178,14 @@ function dru(){
 	if(d3.select("#drugs").property("checked")){
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]))})
 		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]));});
 	}
 	else{
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]))})
 		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]));});
 	}
@@ -135,14 +195,14 @@ function inx(){
 	if(d3.select("#intox").property("checked")){
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]))})
 		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]));});
 	}
 	else{
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]))})
 		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]));});
 	}
@@ -152,27 +212,27 @@ function oth(){
 	if(d3.select("#other").property("checked")){
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]))})
 		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]));});
 	}
 	else{
 		svg.selectAll("rect.blue")
 		.transition()
-		.duration(800)
+		.duration(400)
 		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]))})
 		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]));});
 	}
 }
 
-function display(){			
-	
+function display(){
+
 	if(d3.select("#check").property("checked")){
 		svg.selectAll("rect")
 	  	.data(tweets)
 	  	.attr("y", function(d) {return height/2 + 1;})
 		.transition()
-		.duration(800)
+		.duration(400)
 	  	.attr("height", function(d) {return y2(d);})
 
 		svg.selectAll("g.y2").select("text.soon").text("Number of Tweets");
@@ -183,7 +243,7 @@ function display(){
 	  	//.attr("x",function(d) {return x(months[tweets.indexOf(d)])})
 	  	.attr("y", function(d) {return height/2 + 1;})
 		.transition()
-		.duration(800)
+		.duration(400)
 	  	.attr("height", function(d) {return y2(d);})
 
 		svg.selectAll("g.y2").select("text.soon").text("Sentiment Value");
