@@ -18,7 +18,7 @@ def data():
     sent = databaseManager.sentQuan()
     sample = databaseManager.totalContent()
     print sample[0]
-    return render_template('test.html', test = out0, tweets = tweets, sent = sent, sample = sample[0])
+    return render_template('test.html', test = out0, test2 = out1, tweets = tweets, sent = sent, sample = sample[0])
 
 
 @app.route("/build")

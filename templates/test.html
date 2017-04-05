@@ -50,6 +50,7 @@
 <script>
 //read in the data arrays
 var cnum = {{test}};
+var icrime = {{test2}};
 var tw = {{tweets}};
 var st = {{sent}};
 //var smp = {{sample}};
@@ -57,69 +58,115 @@ var months = ["Jan '09","Feb '09","Mar '09","Apr '09","May '09","Jun '09","Jul '
 var crimes = cnum.slice(0,84);
 var sent = st.slice(0,84);
 var tweets = tw.slice(0,84);
-var sum = 0;
-
-for(var i = 0; i < crimes.length; i++){
-	sum += d3.sum(crimes[i]);
-}
 
 console.log(d3.selectAll("input"));
+var des = 0;
 
 //filters
-function display(){	
-	if(d3.select("#drugs").property("checked")){
-		svg.selectAll("rect")
-		//.data(DArray)
+function lar(){
+	if(d3.select("#larceny").property("checked") ){
+		svg.selectAll("rect.blue")
 		.transition()
 		.duration(2000)
-		.attr("y", function(d,i) {return y(d3.sum(tweets)/d3.sum(crimes) * d)})
-		.attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);});
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]))})
+		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]));});
 	}
-	
-	if(d3.select("#intox").property("checked")){
-		svg.selectAll("rect")
-		//.data(DArray)
+	else if(!d3.select("#larceny").property("checked")){
+		svg.selectAll("rect.blue")
 		.transition()
 		.duration(2000)
-		.attr("y", function(d) {return y(d3.sum(tweets)/d3.sum(crimes) * d)})
-		.attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);});
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]))})
+		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][0]));});
 	}
-	
+}
+
+function har(){
 	if(d3.select("#harrassment").property("checked")){
-		svg.selectAll("rect")
-		//.data(DArray)
+		svg.selectAll("rect.blue")
 		.transition()
 		.duration(2000)
-		.attr("y", function(d) {return y(d3.sum(tweets)/d3.sum(crimes) * d)})
-		.attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);});
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]))})
+		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]));});
 	}
-	
+	else{
+		svg.selectAll("rect.blue")
+		.transition()
+		.duration(2000)
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]))})
+		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][1]));});
+	}
+}
+
+function asu(){
 	if(d3.select("#assault").property("checked")){
-		svg.selectAll("rect")
-		//.data(DArray)
+		svg.selectAll("rect.blue")
 		.transition()
 		.duration(2000)
-		.attr("y", function(d) {return y(d3.sum(tweets)/d3.sum(crimes) * d)})
-		.attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);});
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]))})
+		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]));});
 	}
-	
-	if(d3.select("#larceny").property("checked")){
-		svg.selectAll("rect")
-		//.data(DArray)
+	else{
+		svg.selectAll("rect.blue")
 		.transition()
 		.duration(2000)
-		.attr("y", function(d) {return y(d3.sum(tweets)/d3.sum(crimes) * d)})
-		.attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);});
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]))})
+		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][2]));});
 	}
-	
+}
+
+function dru(){
+	if(d3.select("#drugs").property("checked")){
+		svg.selectAll("rect.blue")
+		.transition()
+		.duration(2000)
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]))})
+		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]));});
+	}
+	else{
+		svg.selectAll("rect.blue")
+		.transition()
+		.duration(2000)
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]))})
+		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][3]));});
+	}
+}
+
+function inx(){
+	if(d3.select("#intox").property("checked")){
+		svg.selectAll("rect.blue")
+		.transition()
+		.duration(2000)
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]))})
+		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]));});
+	}
+	else{
+		svg.selectAll("rect.blue")
+		.transition()
+		.duration(2000)
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]))})
+		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][4]));});
+	}
+}
+
+function oth(){
 	if(d3.select("#other").property("checked")){
-		svg.selectAll("rect")
-		//.data(DArray)
+		svg.selectAll("rect.blue")
 		.transition()
 		.duration(2000)
-		.attr("y", function(d) {return y(d3.sum(tweets)/d3.sum(crimes) * d)})
-		.attr("height", function(d) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);});
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]))})
+		.attr("height", function(d,i){return d3.select(this).attr("height") - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]));});
 	}
+	else{
+		svg.selectAll("rect.blue")
+		.transition()
+		.duration(2000)
+		.attr("y", function(d,i) {return parseFloat(d3.select(this).attr("y")) - (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]))})
+		.attr("height", function(d,i){return parseFloat(d3.select(this).attr("height")) + (height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * icrime[i][5]));});
+	}
+}
+
+function display(){			
+	
 	if(d3.select("#check").property("checked")){
 		svg.selectAll("rect")
 	  	.data(tweets)
@@ -143,8 +190,13 @@ function display(){
 	}
 }
 
-
-d3.selectAll("input").on("change",display);
+d3.select("#check").on("change",display);
+d3.select("#larceny").on("change",lar);
+d3.select("#harrassment").on("change",har);
+d3.select("#assault").on("change",asu);
+d3.select("#drugs").on("change",dru);
+d3.select("#intox").on("change",inx);
+d3.select("#other").on("change",oth);
 
 var tooltip = d3.select("body").append("div")
 	.attr("class","tooltip")
@@ -188,7 +240,7 @@ var svg = d3.select("body").append("svg")
 
 //setting the axis values
 x.domain(months);
-y.domain([0,d3.sum(tweets)/sum * d3.max(crimes) + 150]);
+y.domain([0,d3.sum(tweets)/d3.sum(crimes) * d3.max(crimes)]);
 y2.domain([0,d3.max(tw)]);
 
 
@@ -238,7 +290,7 @@ y2.domain([0,d3.max(tw)]);
 	  .style("fill","red")
 	  .on("mouseover",function(d,i){
 			tooltip.transition()
-				.duration(500)
+				.duration(200)
 				.style("opacity", .8)
 				.style("left", d3.event.pageX + "px")
 				.style("top", d3.event.pageY + "px")
@@ -247,7 +299,7 @@ y2.domain([0,d3.max(tw)]);
 		})
 	   .on("mouseout",function(d,i){
 			tooltip.transition()
-				.duration(500)
+				.duration(200)
 				.style("opacity",0);
 		});
 
@@ -255,10 +307,11 @@ y2.domain([0,d3.max(tw)]);
       .data(crimes)
       .enter()
 	  .append("rect")
+	  .attr("class","blue")
 	  .attr("x", function(d,i){return x(months[i])})
 	  //.attr("x", function(d){return x(months[crimes.indexOf(d)])})
-	  .attr("y", function(d,i) {return y(d3.sum(tweets)/sum * d3.sum(d));})
-      .attr("height", function(d,i) {return height / 2 - y(d3.sum(tweets)/sum * d3.sum(d));})
+	  .attr("y", function(d,i) {return y(d3.sum(tweets)/d3.sum(crimes) * d);})
+      .attr("height", function(d,i) {return height / 2 - y(d3.sum(tweets)/d3.sum(crimes) * d);})
 	  .attr("width", x.rangeBand())
 	  .style("fill","steelblue");
 
