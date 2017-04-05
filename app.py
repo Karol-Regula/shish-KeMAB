@@ -17,7 +17,7 @@ def data():
     tweets = databaseManager.datesQuan()
     sent = databaseManager.sentQuan()
     sample = databaseManager.totalContent()
-    print sample
+    #print sample
     return render_template('test.html', test = out0, test2 = out1, tweets = tweets, sent = sent, sample = sample)
 
 
