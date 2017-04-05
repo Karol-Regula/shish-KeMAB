@@ -96,3 +96,11 @@ anthonyC -- 2017-04-04 09:44 PM
 anthonyC -- 2017-04-04 11:30 PM
 - Continued work on crime filters and hover on bar graphs
 - Sped up bar graph animations
+- fixed x-axis and reverted scaling on crimes
+
+karolR -- 2017-04-05 01:47 AM
+- added css styling to checkboxes, increased transition speed of graph
+- added site title, heading, a brief description, and a link to the readme
+- rewrote function that returns a sample tweet for each month
+- passed modified sample tweet array as a string to js and split it
+  - issue - js does not recognize array sent from python as array, have to send as string, contains odd characters
