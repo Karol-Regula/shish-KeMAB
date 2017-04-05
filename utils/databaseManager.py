@@ -53,18 +53,96 @@ def findCrimesInDate(month, year):
     return out
 
 
+def findCrimeTypes():
+    initializeDB()
+    out = []
+    current = ['', 0]
+    c.execute('SELECT type FROM crimes;')
+    types = c.fetchall()
+    for ctype in types:
+        current = ['', 0]
+        ctype = ctype[0]
+        state = False
+        for i in out:
+            if (str(i[0]) == str(ctype)):
+                state = True
+                i[1] = i[1] + 1
+        if (not state):
+            print ctype
+            current[0] = ctype
+            current[1] = 1
+            out.append(current)
+        state = False
+    closeDB()
+    print out
+    out = sorted(out, key=itemgetter(1))
+    print out
+    return out
+
+# returns amount of crimes in a specific month and year
+def findCrimesInDate(month, year):
+    initializeDB()
+    out = []
+    a1 = 0 #larceny
+    a2 = 'PETIT LARCENY'
+    a3 = 'GRAND LARCENY'
+    b1 = 0 #harrassment
+    b2 = 'HARRASSMENT 2'
+    c1 = 0 #assault
+    c2 = 'ASSAULT 3 & RELATED OFFENSES'
+    d1 = 0 #drugs
+    d2 = 'DANGEROUS DRUGS'
+    e1 = 0 #intoxicated driving
+    e2 = 'INTOXICATED & IMPAIRED DRIVING'
+    f1 = 0 #other
+    c.execute('SELECT value, type FROM crimes;')
+    dates = c.fetchall()
+    for date in dates:
+        Tdate = date[0]
+        Ttype = date[1]
+        if Tdate[8:] == year:
+            if Tdate[0:2] == month:
+                if Ttype == a2 or Ttype == a2:
+                    a1 += 1
+                elif Ttype == b2:
+                    b1 += 1
+                elif Ttype == c2:
+                    c1 += 1
+                elif Ttype == d2:
+                    d1 += 1
+                elif Ttype == e2:
+                    e1 += 1
+                else:
+                    f1 += 1
+    out.append(a1)
+    out.append(b1)
+    out.append(c1)
+    out.append(d1)
+    out.append(e1)
+    out.append(f1)
+    closeDB()
+    print 'month: ' + month + ', year: ' + year
+    print 'amount: ' + str(out)
+    return out
+
 def findCrimesInDateAll():  # runs the findCrimesIn function for each month and year, returns array
     out = []
     months = ['01', '02', '03', '04', '05',
               '06', '07', '08', '09', '10', '11', '12']
-    years = ['09', '10', '11', '12', '13', '14', '15', '16']
+    years = ['09', '10', '11', '12', '13', '14', '15']
     for y in years:
         for m in months:
             out.append(findCrimesInDate(m, y))
-    initializeDB()
-    c.execute(
-        'INSERT INTO parsed (content, array) VALUES ("findCrimesInDateAll", ?);', (str(out),))
-    closeDB()
+
+    file = 'data/databaseUP.db'
+    db = sqlite3.connect(file)
+    c = db.cursor()
+
+    c.execute('INSERT INTO parsed (content, array) VALUES ("findCrimesInDateAll", ?);', (str(out),))
+
+    db.commit()
+    db.close()
+
     print out
     return out
 

@@ -7,7 +7,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def placeholder0():
-    print databaseManager.sentQuan()
+    #print databaseManager.sentQuan()
     return
 
 
@@ -21,7 +21,10 @@ def data():
 
 
 @app.route("/build")
-def placeholder1():
+def build():
+    #datasetManager.parseTweets()
+    databaseManager.findCrimesInDateAll()
+    databaseManager.getCrimesInDateAll()
     return
 
 
