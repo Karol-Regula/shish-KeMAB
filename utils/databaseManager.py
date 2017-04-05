@@ -152,8 +152,8 @@ def getCrimesInDateAll():  # retreives ready data from parsed table
     c.execute('SELECT array FROM parsed WHERE (content = "findCrimesInDateAll");')
     out = c.fetchall()
     closeDB()
-    print out[0][0]
-    return out[0][0]
+    print out[1][0]
+    return out[1][0]
 
 
 def yearSort():

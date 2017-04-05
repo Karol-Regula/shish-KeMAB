@@ -23,7 +23,7 @@ def data():
 @app.route("/build")
 def build():
     #datasetManager.parseTweets()
-    databaseManager.findCrimesInDateAll()
+    #databaseManager.findCrimesInDateAll()
     databaseManager.getCrimesInDateAll()
     return
 
