@@ -16,7 +16,8 @@ def data():
     out = databaseManager.getCrimesInDateAll()
     tweets = databaseManager.datesQuan()
     sent = databaseManager.sentQuan()
-    return render_template('test.html', test=out, tweets = tweets, sent = sent )
+    sample = databaseManager.totalContent()
+    return render_template('test.html', test=out, tweets = tweets, sent = sent, sample = sample)
 
 
 @app.route("/build")
