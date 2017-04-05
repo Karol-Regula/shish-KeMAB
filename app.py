@@ -7,8 +7,7 @@ app = Flask(__name__)
 
 @app.route("/")
 def placeholder0():
-    #print databaseManager.sentQuan()
-    return
+    return redirect(url_for('data'))
 
 
 @app.route("/data")
@@ -17,7 +16,7 @@ def data():
     tweets = databaseManager.datesQuan()
     sent = databaseManager.sentQuan()
     sample = databaseManager.totalContent()
-    return render_template('test.html', test=out, tweets = tweets, sent = sent, sample = sample)
+    return render_template('test.html', test = out, tweets = tweets, sent = sent, sample = sample)
 
 
 @app.route("/build")
