@@ -304,11 +304,12 @@ def totalContent():
         start = yearI - 2009
         end = start * 12 + monthI - 1
         if (item[2] != -2 and item[2] != 0):
-            if (len(totQuan[end])<2):
+            if (len(totQuan[end])<1):
                 out = []
                 out.append(str(item[0]))
                 out.append(str(item[1]))
                 totQuan[end].append(out)
+                print "out" + str(out)
     closeDB()
     #print totQuan
     return totQuan
