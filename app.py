@@ -12,11 +12,13 @@ def placeholder0():
 
 @app.route("/data")
 def data():
-    out = databaseManager.getCrimesInDateAll()
+    out0 = databaseManager.getCrimesInDateAll0()
+    out1 = databaseManager.getCrimesInDateAll1()
     tweets = databaseManager.datesQuan()
     sent = databaseManager.sentQuan()
     sample = databaseManager.totalContent()
-    return render_template('test.html', test = out, tweets = tweets, sent = sent, sample = sample)
+    print sample[0]
+    return render_template('test.html', test = out0, tweets = tweets, sent = sent, sample = sample[0])
 
 
 @app.route("/build")

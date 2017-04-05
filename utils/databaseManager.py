@@ -147,12 +147,18 @@ def findCrimesInDateAll():  # runs the findCrimesIn function for each month and 
     return out
 
 
-def getCrimesInDateAll():  # retreives ready data from parsed table
+def getCrimesInDateAll0():  # retreives ready data from parsed table
     initializeDB()
     c.execute('SELECT array FROM parsed WHERE (content = "findCrimesInDateAll");')
     out = c.fetchall()
     closeDB()
-    #print out[1][0]
+    return out[0][0]
+
+def getCrimesInDateAll1():  # retreives ready data from parsed table
+    initializeDB()
+    c.execute('SELECT array FROM parsed WHERE (content = "findCrimesInDateAll");')
+    out = c.fetchall()
+    closeDB()
     return out[1][0]
 
 
@@ -299,7 +305,10 @@ def totalContent():
         end = start * 12 + monthI - 1
         if (item[2] != -2 and item[2] != 0):
             if (len(totQuan[end])<2):
-                totQuan[end].append(item[:2])
+                out = []
+                out.append(str(item[0]))
+                out.append(str(item[1]))
+                totQuan[end].append(out)
     closeDB()
     #print totQuan
     return totQuan
