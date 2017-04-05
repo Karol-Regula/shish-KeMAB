@@ -44,6 +44,55 @@ karolR -- 2017-03-31 12:31 PM
 
 karolR -- 2017-04-02 02:45 PM
 - added find crime by month and year function
-- added new 'parsed' table for storing results of parsing crime data
-- started work on app.py, added route that displays some parsed crime data
+- added new 'parsed' table for storing results of parsing crime data, in
+  addition to functions for retrieving parsed data
+- started work on app.py, added route that displays parse crime data by month
 
+mishaK -- 2017-04-02 11:57 PM
+- created functions to sanitize tweets and predict their sentiment
+  using TextBlob
+- implemented sentiment analysis in parseTweets(), & modified database schema
+  to store sentiment values
+- refactored code according to pep8 (python convention)
+
+bayleS and mishaK -- 2017-04-03 12:16 PM
+- modified sentiment database schema and sentiment values
+- added sentQuan() method, which calculates and returns array of net
+  sentiment for each month's tweets (#pos_tweets - #neg_tweets)
+
+anthonyC -- 2017-04-03 05:30 PM
+- added a sample d3-based bar graph
+- uploaded d3 files to static folder
+
+anthonyC -- 2017-04-03 10:06 PM
+- modified bar graph to have positive & negative axis, to display both crime
+bars (+) and tweet bars (-)
+
+bayleS -- 2017-04-04 12:30 PM
+- added function that returns an array of of total number of tweets per month
+
+anthonyC -- 2017-04-04 04:34 PM
+- Made a sample filter for # of tweets and sentiment value
+
+anthonyC -- 2017-04-04 06:35 PM
+- Updated bar graphs to include year data and scaled down graphs
+
+anthonyC -- 2017-04-04 08:00 PM
+- Made slight fixes to bar graph creation and changed month titles
+- Working on implementing hover
+
+karolR -- 2017-04-04 09:00 PM
+- Added function that parses crimes based on type
+- cleaned up some routes and arrays in app.py and databaseManager.
+- Added parsed data for crimes that reflects crime type
+- Added url redirecting from root route
+
+karolR -- 2017-04-04 09:40 PM
+- Made both versions of crime array available.
+
+anthonyC -- 2017-04-04 09:44 PM
+- Worked on the crime filter
+
+anthonyC -- 2017-04-04 11:30 PM
+- Continued work on crime filters and hover on bar graphs
+- Sped up bar graph animations
