@@ -371,15 +371,15 @@ y2.domain([0,d3.max(tw)]);
 	  .attr("height", function(d) {return y2(d);})
 	  .attr("width", x.rangeBand())
 	  .style("fill","red")
-	  .on("mouseover",function(d,i){
-			tooltip.transition()
-				.duration(200)
-				.style("opacity", .8)
-				.style("left", d3.event.pageX + "px")
-				.style("top", d3.event.pageY + "px")
-				.text("great")
-				.style("color","yellow");
-		})
+	  // .on("mouseover",function(d,i){
+		// 	tooltip.transition()
+		// 		.duration(200)
+		// 		.style("opacity", .8)
+		// 		.style("left", d3.event.pageX + "px")
+		// 		.style("top", d3.event.pageY + "px")
+		// 		.text("great")
+		// 		.style("color","yellow");
+		// })
 	   .on("mouseout",function(d,i){
 			tooltip.transition()
 				.duration(200)
